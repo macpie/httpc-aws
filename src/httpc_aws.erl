@@ -155,9 +155,7 @@ start_link() ->
 
 -spec init(list()) -> {ok, state()}.
 init([]) ->
-  {ok, Region} = httpc_aws_config:region(),
-  {_, State} = load_credentials(#state{region = Region}),
-  {ok, State}.
+  {ok, #state{}}.
 
 
 terminate(_, _) ->
