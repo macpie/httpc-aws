@@ -37,7 +37,7 @@
 
 -spec get(Pid :: pid(),
           Service :: string(),
-          Path :: path()) -> result().
+          Path :: file:filename_all()) -> result().
 %% @doc Perform a HTTP GET request to the AWS API for the specified service. The
 %%      response will automatically be decoded if it is either in JSON or XML
 %%      format.
@@ -48,7 +48,7 @@ get(Pid, Service, Path) ->
 
 -spec get(Pid :: pid(),
           Service :: string(),
-          Path :: path(),
+          Path :: file:filename_all(),
           Headers :: headers()) -> result().
 %% @doc Perform a HTTP GET request to the AWS API for the specified service. The
 %%      response will automatically be decoded if it is either in JSON or XML
@@ -60,7 +60,7 @@ get(Pid, Service, Path, Headers) ->
 
 -spec post(Pid :: pid(),
            Service :: string(),
-           Path :: path(),
+           Path :: file:filename_all(),
            Body :: body(),
            Headers :: headers()) -> result().
 %% @doc Perform a HTTP Post request to the AWS API for the specified service. The
@@ -72,7 +72,7 @@ post(Pid, Service, Path, Body, Headers) ->
 
 -spec put(Pid :: pid(),
           Service :: string(),
-          Path :: path(),
+          Path :: file:filename_all(),
           Body :: body(),
           Headers :: headers()) -> result().
 %% @doc Perform a HTTP Put request to the AWS API for the specified service. The
@@ -85,7 +85,7 @@ put(Pid, Service, Path, Body, Headers) ->
 -spec request(Pid :: pid(),
               Service :: string(),
               Method :: method(),
-              Path :: path(),
+              Path :: file:filename_all(),
               Body :: body(),
               Headers :: headers()) -> result().
 %% @doc Perform a HTTP request to the AWS API for the specified service. The
@@ -99,7 +99,7 @@ request(Pid, Service, Method, Path, Body, Headers) ->
 -spec request(Pid :: pid(),
               Service :: string(),
               Method :: method(),
-              Path :: path(),
+              Path :: file:filename_all(),
               Body :: body(),
               Headers :: headers(),
               HTTPOptions :: http_options()) -> result().
@@ -114,7 +114,7 @@ request(Pid, Service, Method, Path, Body, Headers, HTTPOptions) ->
 -spec request(Pid :: pid(),
               Service :: string(),
               Method :: method(),
-              Path :: path(),
+              Path :: file:filename_all(),
               Body :: body(),
               Headers :: headers(),
               HTTPOptions :: http_options(),
@@ -328,7 +328,7 @@ parse_content_type(ContentType) ->
 
 
 -spec perform_request(State :: state(), Service :: string(), Method :: method(),
-                      Headers :: headers(), Path :: path(), Body :: body(),
+                      Headers :: headers(), Path :: file:filename_all(), Body :: body(),
                       Options :: http_options(), Host :: string() | undefined)
     -> {Result :: result(), NewState :: state()}.
 %% @doc Make the API request and return the formatted response.
@@ -340,7 +340,7 @@ perform_request(State, Service, Method, Headers, Path, Body, Options, Host) ->
 
 -spec perform_request_has_creds(true | false, State :: state(),
                                 Service :: string(), Method :: method(),
-                                Headers :: headers(), Path :: path(), Body :: body(),
+                                Headers :: headers(), Path :: file:filename_all(), Body :: body(),
                                 Options :: http_options(), Host :: string() | undefined)
     -> {Result :: result(), NewState :: state()}.
 %% @doc Invoked after checking to see if there are credentials. If there are,
@@ -356,7 +356,7 @@ perform_request_has_creds(false, State, _, _, _, _, _, _, _) ->
 
 -spec perform_request_creds_expired(true | false, State :: state(),
                                     Service :: string(), Method :: method(),
-                                    Headers :: headers(), Path :: path(), Body :: body(),
+                                    Headers :: headers(), Path :: file:filename_all(), Body :: body(),
                                     Options :: http_options(), Host :: string() | undefined)
   -> {Result :: result(), NewState :: state()}.
 %% @doc Invoked after checking to see if the current credentials have expired.
@@ -371,7 +371,7 @@ perform_request_creds_expired(true, State, Service, Method, Headers, Path, Body,
 
 -spec perform_request_creds_refreshed({ok, State :: state()} | {error, State :: state()},
                                       Service :: string(), Method :: method(),
-                                      Headers :: headers(), Path :: path(), Body :: body(),
+                                      Headers :: headers(), Path :: file:filename_all(), Body :: body(),
                                       Options :: http_options(), Host :: string() | undefined)
     -> {Result :: result(), NewState :: state()}.
 %% @doc If it's been determined that there are credentials but they have expired,
@@ -385,7 +385,7 @@ perform_request_creds_refreshed({error, State}, _, _, _, _, _, _, _) ->
 
 
 -spec perform_request_with_creds(State :: state(), Service :: string(), Method :: method(),
-                                 Headers :: headers(), Path :: path(), Body :: body(),
+                                 Headers :: headers(), Path :: file:filename_all(), Body :: body(),
                                  Options :: http_options(), Host :: string() | undefined)
     -> {Result :: result(), NewState :: state()}.
 %% @doc Once it is validated that there are credentials to try and that they have not
